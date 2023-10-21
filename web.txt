@@ -1,0 +1,3 @@
+I love coding
+PHP is my favorite
+I will continue my JavaScript after PHP
