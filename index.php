@@ -93,6 +93,23 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
     <div class="container">
         <div style="display: flex; flex-direction:column; margin-top:20px;">
+
+            <h3>PHP OOP</h3>
+            <h5>Class and object</h5>
+            <?php
+            class Fruit{
+                public $name;
+                public $color;
+
+                function setName($name){
+                    $this->name = $name;
+                }
+                function getName(){
+                    return $this->name;
+                }
+            }
+            ?>
+            <hr>
             <h3>PHP Exception</h3>
             <?php
             function divide($dividend, $divisor) {
@@ -115,7 +132,6 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
             ?>
             <hr>
-            <br>
             <h3>PHP and JSON</h3>
             <h5>PHP JSON encode</h5>
             <?php
