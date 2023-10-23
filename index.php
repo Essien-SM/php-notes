@@ -96,33 +96,68 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
             <h3>PHP OOP</h3>
             <h5>Class and object</h5>
+            <h6>Using set and get methods</h6>
             <?php
-            class Fruit{
+            class Fruit
+            {
                 public $name;
                 public $color;
 
-                function setName($name){
+                function setName($name)
+                {
                     $this->name = $name;
                 }
+                function getName()
+                {
+                    return $this->name;
+                }
+            }
+
+            $mango = new Fruit();
+            $orange = new Fruit();
+
+            $mango->setName("mango");
+            $orange->setName("orange");
+
+            echo $mango->getName() . "<br>";
+            echo $orange->getName();
+            ?>
+
+            <h6>Using constructor function</h6>
+            <?php
+            class Car
+            {
+                public $name;
+                public $color;
+
+                function __construct($name)
+                {
+                    $this->name = $name;
+                }
+
                 function getName(){
                     return $this->name;
                 }
             }
+
+            $ben = new Car("Benz");
+            echo $ben->getName();
             ?>
             <hr>
             <h3>PHP Exception</h3>
             <?php
-            function divide($dividend, $divisor) {
-                if ($divisor == 0){
+            function divide($dividend, $divisor)
+            {
+                if ($divisor == 0) {
                     throw new Exception("Division by zero");
                 }
 
-                return $dividend/$divisor;
-            } 
+                return $dividend / $divisor;
+            }
 
-            try{
-                echo divide(4,0);
-            }catch(Exception $e){
+            try {
+                echo divide(4, 0);
+            } catch (Exception $e) {
                 $code = $e->getCode();
                 $message = $e->getMessage();
                 $file = $e->getFile();
