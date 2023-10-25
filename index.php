@@ -189,6 +189,49 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 $x = new Byebye();
                 $x->mess();
             ?>
+
+            <h6>PHP abstract classes</h6>
+
+            <?php 
+                abstract class NewCar{
+                    public $name;
+                    function __construct($name)
+                    {
+                    $this->name = $name;
+                    }
+                    abstract function intro():string;
+                }
+
+                class Audi extends NewCar{
+                    function intro() : string{
+                        return "Choose German quality! I'm an {$this->name}";
+                    }
+                }
+
+                class Benz extends NewCar{
+                    function intro() : string{
+                        return "Proud to be Swedish! I'm a {$this->name}";
+                    }
+                }
+
+                class Toyota extends NewCar{
+                    function intro() : string{
+                        return "French extravagance! I'm {$this->name}";
+                    }
+                }
+
+                $audi = new Audi("Audi");
+                echo $audi->intro();
+                echo "<br>";
+
+                $benz = new Benz("Benz");
+                echo $benz->intro();
+                echo "<br>";
+
+                $toyota = new Toyota("Toyota");
+                echo $toyota->intro();
+
+            ?>
             <hr>
             <h3>PHP Exception</h3>
             <?php
