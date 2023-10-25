@@ -229,7 +229,46 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 echo "<br>";
 
                 $toyota = new Toyota("Toyota");
-                echo $toyota->intro();
+                echo $toyota->intro();                
+
+            ?>
+
+            <h6>PHP interfaces</h6>
+            <?php 
+                interface Animal{
+                    function makeSound();
+                }
+
+                class Cat implements Animal{
+                    function makeSound(){
+                        echo "Cats make Meow sound"."<br>";
+                    }
+                }
+
+                class Dog implements Animal{
+                    function makeSound()
+                    {
+                        echo "Dogs Bark"."<br>";
+                    }
+                }
+
+                class Mouse implements Animal{
+                    function makeSound()
+                    {
+                        echo "Mouse Squeaks";
+                    }
+                    
+                }
+
+                $cat = new Cat();
+                $dog = new Dog();
+                $mouse = new Mouse();
+                $animals = array($cat, $dog, $mouse);
+
+                foreach($animals as $animal){
+                    $animal->makeSound();
+                }
+
 
             ?>
             <hr>
