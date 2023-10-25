@@ -135,7 +135,8 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                     $this->name = $name;
                 }
 
-                function getName(){
+                function getName()
+                {
                     return $this->name;
                 }
             }
@@ -146,30 +147,48 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
             <h6>Inheritance</h6>
             <?php
-                class Fruits {
-                    public $name;
-                    public $color;
-                    
-                    function __construct ($name, $color){
-                        $this->name = $name;
-                        $this->color = $color;
-                    }
-                    
-                    function intro (){
-                        echo "The fruit is {$this->name} and the color is {$this->color}.";
-                    }
+            class Fruits
+            {
+                public $name;
+                public $color;
+
+                function __construct($name, $color)
+                {
+                    $this->name = $name;
+                    $this->color = $color;
                 }
 
-                class Strawberry extends Fruits {
-                    function message(){
-                        echo "Am I a fruit or a berry? ";
-                    }
+                function intro()
+                {
+                    echo "The fruit is {$this->name} and the color is {$this->color}.";
+                }
+            }
+
+            class Strawberry extends Fruits
+            {
+                function message()
+                {
+                    echo "Am I a fruit or a berry? ";
+                }
+            }
+
+            $strawberry = new Strawberry("Strawberry", "red");
+            $strawberry->message();
+            $strawberry->intro();
+            ?>
+            <h6>PHP class constant</h6>
+            <?php 
+                class Byebye{
+                    const BYE = "Thank you for visiting w3School";
+                    public function mess(){
+                        echo self::BYE;
+                    } 
                 }
 
-                $strawberry = new Strawberry ("Strawberry", "red");
-                $strawberry->message();
-                $strawberry->intro();
-?>
+                echo Byebye::BYE. "<br>";
+                $x = new Byebye();
+                $x->mess();
+            ?>
             <hr>
             <h3>PHP Exception</h3>
             <?php
