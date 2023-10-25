@@ -271,6 +271,38 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
 
             ?>
+
+            <h6>PHP trait</h6>
+
+            <?php 
+                trait message1{
+                    function msg1(){
+                        echo "OOP is fun! ";
+                    }
+                }
+
+                trait message2{
+                    function msg2(){
+                        echo "OOP helps reduce code duplication";
+                    }
+                }
+
+                class Welcome{
+                    use message1;
+                }
+
+                class Welcome2{
+                    use message1, message2;
+                }
+
+                $obj = new Welcome();
+                $obj->msg1();
+                echo "<br>";
+
+                $obj2 = new Welcome2();
+                $obj2->msg1();
+                $obj2->msg2();
+            ?>
             <hr>
             <h3>PHP Exception</h3>
             <?php
