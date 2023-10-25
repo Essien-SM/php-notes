@@ -143,6 +143,33 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             $ben = new Car("Benz");
             echo $ben->getName();
             ?>
+
+            <h6>Inheritance</h6>
+            <?php
+                class Fruits {
+                    public $name;
+                    public $color;
+                    
+                    function __construct ($name, $color){
+                        $this->name = $name;
+                        $this->color = $color;
+                    }
+                    
+                    function intro (){
+                        echo "The fruit is {$this->name} and the color is {$this->color}.";
+                    }
+                }
+
+                class Strawberry extends Fruits {
+                    function message(){
+                        echo "Am I a fruit or a berry? ";
+                    }
+                }
+
+                $strawberry = new Strawberry ("Strawberry", "red");
+                $strawberry->message();
+                $strawberry->intro();
+?>
             <hr>
             <h3>PHP Exception</h3>
             <?php
