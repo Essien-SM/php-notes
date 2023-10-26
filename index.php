@@ -177,131 +177,180 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             $strawberry->intro();
             ?>
             <h6>PHP class constant</h6>
-            <?php 
-                class Byebye{
-                    const BYE = "Thank you for visiting w3School";
-                    public function mess(){
-                        echo self::BYE;
-                    } 
+            <?php
+            class Byebye
+            {
+                const BYE = "Thank you for visiting w3School";
+                public function mess()
+                {
+                    echo self::BYE;
                 }
+            }
 
-                echo Byebye::BYE. "<br>";
-                $x = new Byebye();
-                $x->mess();
+            echo Byebye::BYE . "<br>";
+            $x = new Byebye();
+            $x->mess();
             ?>
 
             <h6>PHP abstract classes</h6>
 
-            <?php 
-                abstract class NewCar{
-                    public $name;
-                    function __construct($name)
-                    {
+
+            <?php
+
+            abstract class ParentClass {
+                abstract protected function prefix($name);
+            }
+
+            class ChildClass extends ParentClass{
+                function prefix($name, $separator = ".", $greet = "Dear")
+                {
+                    if ($name == "John Doe"){
+                        $prefix = "Mr";
+                    } elseif($name == "Jane Doe"){
+                        $prefix = "Mrs";
+                    } else{
+                        $prefix = "";
+                    }
+
+                    return "{$greet} {$prefix}{$separator} {$name}";
+                }                
+            }
+
+            $class = new ChildClass();
+            echo $class->prefix("John Doe");
+            echo "<br>";
+            echo $class->prefix("Jane Doe");
+            
+            ?>
+
+            <?php
+            echo "<br>";
+            abstract class NewCar
+            {
+                public $name;
+                function __construct($name)
+                {
                     $this->name = $name;
-                    }
-                    abstract function intro():string;
                 }
+                abstract function intro(): string;
+            }
 
-                class Audi extends NewCar{
-                    function intro() : string{
-                        return "Choose German quality! I'm an {$this->name}";
-                    }
+            class Audi extends NewCar
+            {
+                function intro(): string
+                {
+                    return "Choose German quality! I'm an {$this->name}";
                 }
+            }
 
-                class Benz extends NewCar{
-                    function intro() : string{
-                        return "Proud to be Swedish! I'm a {$this->name}";
-                    }
+            class Benz extends NewCar
+            {
+                function intro(): string
+                {
+                    return "Proud to be Swedish! I'm a {$this->name}";
                 }
+            }
 
-                class Toyota extends NewCar{
-                    function intro() : string{
-                        return "French extravagance! I'm {$this->name}";
-                    }
+            class Toyota extends NewCar
+            {
+                function intro(): string
+                {
+                    return "French extravagance! I'm {$this->name}";
                 }
+            }
 
-                $audi = new Audi("Audi");
-                echo $audi->intro();
-                echo "<br>";
+            $audi = new Audi("Audi");
+            echo $audi->intro();
+            echo "<br>";
 
-                $benz = new Benz("Benz");
-                echo $benz->intro();
-                echo "<br>";
+            $benz = new Benz("Benz");
+            echo $benz->intro();
+            echo "<br>";
 
-                $toyota = new Toyota("Toyota");
-                echo $toyota->intro();                
+            $toyota = new Toyota("Toyota");
+            echo $toyota->intro();
 
             ?>
 
             <h6>PHP interfaces</h6>
-            <?php 
-                interface Animal{
-                    function makeSound();
-                }
+            <?php
+            interface Animal
+            {
+                function makeSound();
+            }
 
-                class Cat implements Animal{
-                    function makeSound(){
-                        echo "Cats make Meow sound"."<br>";
-                    }
+            class Cat implements Animal
+            {
+                function makeSound()
+                {
+                    echo "Cats make Meow sound" . "<br>";
                 }
+            }
 
-                class Dog implements Animal{
-                    function makeSound()
-                    {
-                        echo "Dogs Bark"."<br>";
-                    }
+            class Dog implements Animal
+            {
+                function makeSound()
+                {
+                    echo "Dogs Bark" . "<br>";
                 }
+            }
 
-                class Mouse implements Animal{
-                    function makeSound()
-                    {
-                        echo "Mouse Squeaks";
-                    }
-                    
+            class Mouse implements Animal
+            {
+                function makeSound()
+                {
+                    echo "Mouse Squeaks";
                 }
+            }
 
-                $cat = new Cat();
-                $dog = new Dog();
-                $mouse = new Mouse();
-                $animals = array($cat, $dog, $mouse);
+            $cat = new Cat();
+            $dog = new Dog();
+            $mouse = new Mouse();
+            $animals = array($cat, $dog, $mouse);
 
-                foreach($animals as $animal){
-                    $animal->makeSound();
-                }
+            foreach ($animals as $animal) {
+                $animal->makeSound();
+            }
 
 
             ?>
 
             <h6>PHP trait</h6>
 
-            <?php 
-                trait message1{
-                    function msg1(){
-                        echo "OOP is fun! ";
-                    }
+            <?php
+            trait message1
+            {
+                function msg1()
+                {
+                    echo "OOP is fun! ";
                 }
+            }
 
-                trait message2{
-                    function msg2(){
-                        echo "OOP helps reduce code duplication";
-                    }
+            trait message2
+            {
+                function msg2()
+                {
+                    echo "OOP helps reduce code duplication";
                 }
+            }
 
-                class Welcome{
-                    use message1;
-                }
+            class Welcome
+            {
+                use message1;
+            }
 
-                class Welcome2{
-                    use message1, message2;
-                }
+            class Welcome2
+            {
+                use message1, message2;
+            }
 
-                $obj = new Welcome();
-                $obj->msg1();
-                echo "<br>";
+            $obj = new Welcome();
+            $obj->msg1();
+            echo "<br>";
 
-                $obj2 = new Welcome2();
-                $obj2->msg1();
-                $obj2->msg2();
+            $obj2 = new Welcome2();
+            $obj2->msg1();
+            $obj2->msg2();
             ?>
             <hr>
             <h3>PHP Exception</h3>
