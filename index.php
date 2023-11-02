@@ -392,6 +392,71 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 echo "</pre>";
             ?>
 
+            <h6>method chaining</h6>
+
+            <?php
+                class Signup{
+
+                    private $data = array();
+                    private $filename = "";
+
+                    function sanitize($data){
+
+                        foreach ($data as $key => $value) {
+                            # code...
+                            $data[$key] = addslashes($value);
+                        }
+
+                        $this->data = $data;
+
+                        return $this;
+
+                    }
+
+                    function file($filename){
+                        if(!file_exists($filename)){
+                            file_put_contents($filename, '');
+                        }
+
+                        $this->filename = $filename;
+                        return $this;
+                    }
+
+                    function save(){
+
+                        $old_data = file_get_contents($this->filename);
+                        $old_array = json_decode($old_data);
+                        $old_array[] = $this->data;
+                        $string = json_encode($old_array);
+                        file_put_contents($this->filename, $string);
+
+                    }
+
+                    function read(){
+
+                        $data = file_get_contents($this->filename);
+                        return json_decode($data);
+
+                    }
+                }
+
+                if ($_POST>0){
+                    $myclass = new Signup();
+                    $myclass->sanitize($_POST)->file("myfile.json")->save();
+                    $result = $myclass->file("myfile.json")->read();
+
+                    echo "<pre>";
+                    print_r($result);
+                    echo "</pre>";
+                }
+            ?>
+
+            <form method="post">
+                <input type="text" name="name" placeholder="name">
+                <input type="text" name="password" placeholder="password">
+                <input type="submit" value="signup">
+            </form>
+
 
             <h6>Inheritance</h6>
             <?php
