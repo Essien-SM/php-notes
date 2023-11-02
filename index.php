@@ -1,4 +1,14 @@
 <?php
+include("Html.php");
+$table = new Html\Table();
+$table->title = "My table";
+$table->numRows = 5;
+
+$row = new Html\Row();
+$row->numCells = 3;
+?>
+
+<?php
 setcookie("user", "", time() - 3600);
 ?>
 <?php
@@ -145,6 +155,244 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             echo $ben->getName();
             ?>
 
+            <h6>Using the set method</h6>
+            <?php 
+            class Database{
+                public $hostname = "localhost";
+                public $dbname = "mydb";
+
+                function __set($name, $value)
+                {
+                    $this->$name = $value;
+                }
+            }
+
+            $db = new Database();
+            $db->password = "some password";
+            echo $db->password;
+            ?>
+
+            <h6>Using the get method</h6>
+            <?php
+                class Db{
+                    public $hostname = "localhost";
+                    public $dbname = "mydb";
+                    public $find = "";
+
+                    function __get($name)
+                    {
+                        
+                        $name = str_replace("get", "", $name);
+                        $name = strtolower($name);
+                        $rows = $this->get_data();
+
+                        if (is_array($rows)){
+
+                            foreach($rows as $row){
+
+                                if(isset($row[$name]) && $row[$name] == $this->find){
+                                    return $row;
+                                }
+                            }
+                        }
+
+                        return "Couldn't find data";
+                    }
+
+                    private function get_data(){
+                        $arr = array();
+                        $arr['id'] = "1";
+                        $arr['name'] = "jack";
+                        $arr['age'] = "24";
+                        $arr['gender'] = "male";
+
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "2";
+                        $arr['name'] = "mary";
+                        $arr['age'] = "14";
+                        $arr['gender'] = "female";
+
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "3";
+                        $arr['name'] = "john";
+                        $arr['age'] = "64";
+                        $arr['gender'] = "male";
+
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "1";
+                        $arr['name'] = "frank";
+                        $arr['age'] = "34";
+                        $arr['gender'] = "male";
+
+                        $rows[] = $arr;
+
+                        return $rows;
+                    }
+                }
+
+                $db = new Db();
+                $db->find = "john";
+
+                echo "<pre>";
+                print_r( $db->getName);
+                echo "</pre>";
+            ?>
+            
+            <h6>Using the call method</h6>
+            <?php
+                class Get {
+
+                    public function get_data(){
+
+                        $arr = array();
+                        $arr['id'] = "1";
+                        $arr['name'] = "thomas";
+                        $arr['age'] = "23";
+                        $arr['gender'] = "male";
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "2";
+                        $arr['name'] = "jane";
+                        $arr['age'] = "24";
+                        $arr['gender'] = "female";
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "3";
+                        $arr['name'] = "abigail";
+                        $arr['age'] = "16";
+                        $arr['gender'] = "female";
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr['id'] = "4";
+                        $arr['name'] = "peter";
+                        $arr['age'] = "29";
+                        $arr['gender'] = "male";
+                        $rows[] = $arr;
+
+                        return $rows;
+
+                    }
+
+                    function __call($method, $args)
+                    {
+                        if(strstr($method, "get_by_")){
+                            $column = str_replace("get_by_", "", $method);
+                            return $this->get_by($column, $args[0]);
+                        }
+
+                        return "couldn't find method";
+                    }
+
+                    function get_by($column, $find){
+
+                        $rows = $this->get_data();
+
+                        if(is_array($rows)){
+                            foreach ($rows as $row) {
+                                # code...
+                                if(isset($row[$column]) && $row[$column] == $find){
+                                    return $row;
+                                }
+                            }
+                        }
+
+                        return "couldn't find data";
+                    }
+
+                    
+
+                }
+
+                $db = new Get();
+                echo "<pre>";
+                print_r($db->get_by_name("thomas"));
+                echo "</pre>";
+            ?>
+            
+            <h6>Using the tostring method</h6>
+
+            <?php
+                class Str{
+
+                    public $hostname = "localhost";
+
+                    function __call($method, $args)
+                    {
+                        if (strstr($method, "get_by_")) {
+                            # code...
+                            $column = str_replace("get_by_", "", $method);
+                            return $this->get_by($column, $args[0]);
+                        }
+
+                        return "couldn't find method";
+                    }
+
+                    function get_data(){
+
+                        $arr = array();
+                        $arr["id"] = "1";
+                        $arr["name"] = "appiah";
+                        $arr["age"] = "21";
+                        $arr["gender"] = "male";
+
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr["id"] = "2";
+                        $arr["name"] = "abena";
+                        $arr["age"] = "12";
+                        $arr["gender"] = "female";
+
+                        $rows[] = $arr;
+                        $arr = array();
+                        $arr["id"] = "3";
+                        $arr["name"] = "araba";
+                        $arr["age"] = "45";
+                        $arr["gender"] = "female";
+
+                        $rows[] = $arr;
+
+                        return $rows;
+                    }
+
+                    function get_by($column, $find){
+
+                        $rows = $this->get_data();
+
+                        if (is_array($rows)) {
+                            # code...
+                            foreach ($rows as $row) {
+                                # code...
+                                if (isset($row[$column]) && $row[$column] == $find) {
+                                    # code...
+                                    return $row;
+                                }
+                            }
+                        }
+
+                        return "couldn't find data";
+                    }
+
+                    function __toString()
+                    {
+                        return "method: get_by(column, find)"."<br>"."method: __call(method, args)";
+                    }
+
+
+                }
+
+                $str = new Str();
+
+                echo $str;
+
+                echo "<pre>";
+                print_r($str->get_by_id("3"));
+                echo "</pre>";
+            ?>
+
+
             <h6>Inheritance</h6>
             <?php
             class Fruits
@@ -197,30 +445,33 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
             <?php
 
-            abstract class ParentClass {
+            abstract class ParentClass
+            {
                 abstract protected function prefix($name);
             }
 
-            class ChildClass extends ParentClass{
+            class ChildClass extends ParentClass
+            {
                 function prefix($name, $separator = ".", $greet = "Dear")
                 {
-                    if ($name == "John Doe"){
+                    if ($name == "John Doe") {
                         $prefix = "Mr";
-                    } elseif($name == "Jane Doe"){
+                    } elseif ($name == "Jane Doe") {
                         $prefix = "Mrs";
-                    } else{
+                    } else {
                         $prefix = "";
                     }
 
                     return "{$greet} {$prefix}{$separator} {$name}";
-                }                
+                }
             }
 
             $class = new ChildClass();
             echo $class->prefix("John Doe");
             echo "<br>";
             echo $class->prefix("Jane Doe");
-            
+
+
             ?>
 
             <?php
@@ -352,6 +603,58 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             $obj2->msg1();
             $obj2->msg2();
             ?>
+
+            <h6>PHP static method</h6>
+            <?php
+            class Domain
+            {
+                protected static function getDomain()
+                {
+                    return "w3school .com";
+                }
+            }
+
+            class Domain3 extends Domain
+            {
+                public $url;
+                function __construct()
+                {
+                    $this->url = parent::getDomain();
+                }
+            }
+
+            $dom = new Domain3();
+            echo $dom->url;
+            ?>
+
+            <h6>PHP static property</h6>
+            <?php
+            class Pi
+            {
+                public static $value = 3.234436;
+            }
+
+            class x extends Pi
+            {
+                public function xStatic()
+                {
+                    return parent::$value;
+                }
+            }
+
+            echo x::$value;
+            echo "<br>";
+            $x = new x();
+            echo $x->xStatic();
+            ?>
+
+            <h6>PHP namespace</h6>
+
+
+            <?php $table->message(); ?>
+            <?php $row->message(); ?>
+
+
             <hr>
             <h3>PHP Exception</h3>
             <?php
@@ -374,7 +677,9 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 echo "Exception thrown in $file on line $line: [code $code] $message.";
             }
 
+
             ?>
+
             <hr>
             <h3>PHP and JSON</h3>
             <h5>PHP JSON encode</h5>
