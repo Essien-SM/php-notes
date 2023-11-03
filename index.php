@@ -1,4 +1,7 @@
 <?php
+
+use App\Products\Product;
+
 include("Html.php");
 $table = new Html\Table();
 $table->title = "My table";
@@ -156,8 +159,9 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             ?>
 
             <h6>Using the set method</h6>
-            <?php 
-            class Database{
+            <?php
+            class Database
+            {
                 public $hostname = "localhost";
                 public $dbname = "mydb";
 
@@ -174,281 +178,285 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
             <h6>Using the get method</h6>
             <?php
-                class Db{
-                    public $hostname = "localhost";
-                    public $dbname = "mydb";
-                    public $find = "";
+            class Db
+            {
+                public $hostname = "localhost";
+                public $dbname = "mydb";
+                public $find = "";
 
-                    function __get($name)
-                    {
-                        
-                        $name = str_replace("get", "", $name);
-                        $name = strtolower($name);
-                        $rows = $this->get_data();
+                function __get($name)
+                {
 
-                        if (is_array($rows)){
+                    $name = str_replace("get", "", $name);
+                    $name = strtolower($name);
+                    $rows = $this->get_data();
 
-                            foreach($rows as $row){
+                    if (is_array($rows)) {
 
-                                if(isset($row[$name]) && $row[$name] == $this->find){
-                                    return $row;
-                                }
+                        foreach ($rows as $row) {
+
+                            if (isset($row[$name]) && $row[$name] == $this->find) {
+                                return $row;
                             }
                         }
-
-                        return "Couldn't find data";
                     }
 
-                    private function get_data(){
-                        $arr = array();
-                        $arr['id'] = "1";
-                        $arr['name'] = "jack";
-                        $arr['age'] = "24";
-                        $arr['gender'] = "male";
-
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "2";
-                        $arr['name'] = "mary";
-                        $arr['age'] = "14";
-                        $arr['gender'] = "female";
-
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "3";
-                        $arr['name'] = "john";
-                        $arr['age'] = "64";
-                        $arr['gender'] = "male";
-
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "1";
-                        $arr['name'] = "frank";
-                        $arr['age'] = "34";
-                        $arr['gender'] = "male";
-
-                        $rows[] = $arr;
-
-                        return $rows;
-                    }
+                    return "Couldn't find data";
                 }
 
-                $db = new Db();
-                $db->find = "john";
+                private function get_data()
+                {
+                    $arr = array();
+                    $arr['id'] = "1";
+                    $arr['name'] = "jack";
+                    $arr['age'] = "24";
+                    $arr['gender'] = "male";
 
-                echo "<pre>";
-                print_r( $db->getName);
-                echo "</pre>";
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "2";
+                    $arr['name'] = "mary";
+                    $arr['age'] = "14";
+                    $arr['gender'] = "female";
+
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "3";
+                    $arr['name'] = "john";
+                    $arr['age'] = "64";
+                    $arr['gender'] = "male";
+
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "1";
+                    $arr['name'] = "frank";
+                    $arr['age'] = "34";
+                    $arr['gender'] = "male";
+
+                    $rows[] = $arr;
+
+                    return $rows;
+                }
+            }
+
+            $db = new Db();
+            $db->find = "john";
+
+            echo "<pre>";
+            print_r($db->getName);
+            echo "</pre>";
             ?>
-            
+
             <h6>Using the call method</h6>
             <?php
-                class Get {
+            class Get
+            {
 
-                    public function get_data(){
+                public function get_data()
+                {
 
-                        $arr = array();
-                        $arr['id'] = "1";
-                        $arr['name'] = "thomas";
-                        $arr['age'] = "23";
-                        $arr['gender'] = "male";
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "2";
-                        $arr['name'] = "jane";
-                        $arr['age'] = "24";
-                        $arr['gender'] = "female";
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "3";
-                        $arr['name'] = "abigail";
-                        $arr['age'] = "16";
-                        $arr['gender'] = "female";
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr['id'] = "4";
-                        $arr['name'] = "peter";
-                        $arr['age'] = "29";
-                        $arr['gender'] = "male";
-                        $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "1";
+                    $arr['name'] = "thomas";
+                    $arr['age'] = "23";
+                    $arr['gender'] = "male";
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "2";
+                    $arr['name'] = "jane";
+                    $arr['age'] = "24";
+                    $arr['gender'] = "female";
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "3";
+                    $arr['name'] = "abigail";
+                    $arr['age'] = "16";
+                    $arr['gender'] = "female";
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr['id'] = "4";
+                    $arr['name'] = "peter";
+                    $arr['age'] = "29";
+                    $arr['gender'] = "male";
+                    $rows[] = $arr;
 
-                        return $rows;
-
-                    }
-
-                    function __call($method, $args)
-                    {
-                        if(strstr($method, "get_by_")){
-                            $column = str_replace("get_by_", "", $method);
-                            return $this->get_by($column, $args[0]);
-                        }
-
-                        return "couldn't find method";
-                    }
-
-                    function get_by($column, $find){
-
-                        $rows = $this->get_data();
-
-                        if(is_array($rows)){
-                            foreach ($rows as $row) {
-                                # code...
-                                if(isset($row[$column]) && $row[$column] == $find){
-                                    return $row;
-                                }
-                            }
-                        }
-
-                        return "couldn't find data";
-                    }
-
-                    
-
+                    return $rows;
                 }
 
-                $db = new Get();
-                echo "<pre>";
-                print_r($db->get_by_name("thomas"));
-                echo "</pre>";
+                function __call($method, $args)
+                {
+                    if (strstr($method, "get_by_")) {
+                        $column = str_replace("get_by_", "", $method);
+                        return $this->get_by($column, $args[0]);
+                    }
+
+                    return "couldn't find method";
+                }
+
+                function get_by($column, $find)
+                {
+
+                    $rows = $this->get_data();
+
+                    if (is_array($rows)) {
+                        foreach ($rows as $row) {
+                            # code...
+                            if (isset($row[$column]) && $row[$column] == $find) {
+                                return $row;
+                            }
+                        }
+                    }
+
+                    return "couldn't find data";
+                }
+            }
+
+            $db = new Get();
+            echo "<pre>";
+            print_r($db->get_by_name("thomas"));
+            echo "</pre>";
             ?>
-            
+
             <h6>Using the tostring method</h6>
 
             <?php
-                class Str{
+            class Str
+            {
 
-                    public $hostname = "localhost";
+                public $hostname = "localhost";
 
-                    function __call($method, $args)
-                    {
-                        if (strstr($method, "get_by_")) {
-                            # code...
-                            $column = str_replace("get_by_", "", $method);
-                            return $this->get_by($column, $args[0]);
-                        }
-
-                        return "couldn't find method";
+                function __call($method, $args)
+                {
+                    if (strstr($method, "get_by_")) {
+                        # code...
+                        $column = str_replace("get_by_", "", $method);
+                        return $this->get_by($column, $args[0]);
                     }
 
-                    function get_data(){
-
-                        $arr = array();
-                        $arr["id"] = "1";
-                        $arr["name"] = "appiah";
-                        $arr["age"] = "21";
-                        $arr["gender"] = "male";
-
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr["id"] = "2";
-                        $arr["name"] = "abena";
-                        $arr["age"] = "12";
-                        $arr["gender"] = "female";
-
-                        $rows[] = $arr;
-                        $arr = array();
-                        $arr["id"] = "3";
-                        $arr["name"] = "araba";
-                        $arr["age"] = "45";
-                        $arr["gender"] = "female";
-
-                        $rows[] = $arr;
-
-                        return $rows;
-                    }
-
-                    function get_by($column, $find){
-
-                        $rows = $this->get_data();
-
-                        if (is_array($rows)) {
-                            # code...
-                            foreach ($rows as $row) {
-                                # code...
-                                if (isset($row[$column]) && $row[$column] == $find) {
-                                    # code...
-                                    return $row;
-                                }
-                            }
-                        }
-
-                        return "couldn't find data";
-                    }
-
-                    function __toString()
-                    {
-                        return "method: get_by(column, find)"."<br>"."method: __call(method, args)";
-                    }
-
-
+                    return "couldn't find method";
                 }
 
-                $str = new Str();
+                function get_data()
+                {
 
-                echo $str;
+                    $arr = array();
+                    $arr["id"] = "1";
+                    $arr["name"] = "appiah";
+                    $arr["age"] = "21";
+                    $arr["gender"] = "male";
 
-                echo "<pre>";
-                print_r($str->get_by_id("3"));
-                echo "</pre>";
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr["id"] = "2";
+                    $arr["name"] = "abena";
+                    $arr["age"] = "12";
+                    $arr["gender"] = "female";
+
+                    $rows[] = $arr;
+                    $arr = array();
+                    $arr["id"] = "3";
+                    $arr["name"] = "araba";
+                    $arr["age"] = "45";
+                    $arr["gender"] = "female";
+
+                    $rows[] = $arr;
+
+                    return $rows;
+                }
+
+                function get_by($column, $find)
+                {
+
+                    $rows = $this->get_data();
+
+                    if (is_array($rows)) {
+                        # code...
+                        foreach ($rows as $row) {
+                            # code...
+                            if (isset($row[$column]) && $row[$column] == $find) {
+                                # code...
+                                return $row;
+                            }
+                        }
+                    }
+
+                    return "couldn't find data";
+                }
+
+                function __toString()
+                {
+                    return "method: get_by(column, find)" . "<br>" . "method: __call(method, args)";
+                }
+            }
+
+            $str = new Str();
+
+            echo $str;
+
+            echo "<pre>";
+            print_r($str->get_by_id("3"));
+            echo "</pre>";
             ?>
 
             <h6>method chaining</h6>
 
             <?php
-                class Signup{
+            class Signup
+            {
 
-                    private $data = array();
-                    private $filename = "";
+                private $data = array();
+                private $filename = "";
 
-                    function sanitize($data){
+                function sanitize($data)
+                {
 
-                        foreach ($data as $key => $value) {
-                            # code...
-                            $data[$key] = addslashes($value);
-                        }
-
-                        $this->data = $data;
-
-                        return $this;
-
+                    foreach ($data as $key => $value) {
+                        # code...
+                        $data[$key] = addslashes($value);
                     }
 
-                    function file($filename){
-                        if(!file_exists($filename)){
-                            file_put_contents($filename, '');
-                        }
+                    $this->data = $data;
 
-                        $this->filename = $filename;
-                        return $this;
-                    }
-
-                    function save(){
-
-                        $old_data = file_get_contents($this->filename);
-                        $old_array = json_decode($old_data);
-                        $old_array[] = $this->data;
-                        $string = json_encode($old_array);
-                        file_put_contents($this->filename, $string);
-
-                    }
-
-                    function read(){
-
-                        $data = file_get_contents($this->filename);
-                        return json_decode($data);
-
-                    }
+                    return $this;
                 }
 
-                if ($_POST>0){
-                    $myclass = new Signup();
-                    $myclass->sanitize($_POST)->file("myfile.json")->save();
-                    $result = $myclass->file("myfile.json")->read();
+                function file($filename)
+                {
+                    if (!file_exists($filename)) {
+                        file_put_contents($filename, '');
+                    }
 
-                    echo "<pre>";
-                    print_r($result);
-                    echo "</pre>";
+                    $this->filename = $filename;
+                    return $this;
                 }
+
+                function save()
+                {
+
+                    $old_data = file_get_contents($this->filename);
+                    $old_array = json_decode($old_data);
+                    $old_array[] = $this->data;
+                    $string = json_encode($old_array);
+                    file_put_contents($this->filename, $string);
+                }
+
+                function read()
+                {
+
+                    $data = file_get_contents($this->filename);
+                    return json_decode($data);
+                }
+            }
+
+            if ($_POST > 0) {
+                $myclass = new Signup();
+                $myclass->sanitize($_POST)->file("myfile.json")->save();
+                $result = $myclass->file("myfile.json")->read();
+
+                echo "<pre>";
+                print_r($result);
+                echo "</pre>";
+            }
             ?>
 
             <form method="post">
@@ -456,6 +464,28 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 <input type="text" name="password" placeholder="password">
                 <input type="submit" value="signup">
             </form>
+
+
+            <h6>Autoloading with namespace</h6>
+
+            <?php
+
+            spl_autoload_register(function ($class_name) {
+                $class_name = explode("\\", $class_name);
+                $class_name = array_pop($class_name);
+                include strtolower($class_name) . ".class.php";
+            });
+
+
+            
+            use App\Items\Item;
+            use App\Motos\Moto;
+
+
+            $moto = new Moto();
+            $item = new Item();
+
+            ?>
 
 
             <h6>Inheritance</h6>
